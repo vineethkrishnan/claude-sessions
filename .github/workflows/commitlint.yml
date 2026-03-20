@@ -47,6 +47,8 @@ jobs:
             release
             test
             lint
+            main
+            ci
           requireScope: false
           subjectPattern: ^(?![A-Z]).+$
           subjectPatternError: |
