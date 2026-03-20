@@ -3,7 +3,13 @@
 ## npm (recommended)
 
 ```bash
-npm install -g claude-sessions
+npm install -g @vineethnkrishnan/claude-sessions
+```
+
+Or run without installing:
+
+```bash
+npx @vineethnkrishnan/claude-sessions
 ```
 
 ## From source
@@ -24,6 +30,6 @@ claude-sessions --version
 
 ## Prerequisites
 
-- **Node.js 18+** — [Download](https://nodejs.org/)
+- **Node.js 20+** — [Download](https://nodejs.org/)
 - **Claude Code CLI** — Must be installed and have at least one session in `~/.claude/projects/`
 - **fzf** (optional) — Only needed for `--fzf` mode. [Install fzf](https://github.com/junegunn/fzf#installation)

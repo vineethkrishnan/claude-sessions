@@ -23,13 +23,13 @@ macOS and Linux. Windows is not currently supported due to path handling differe
 ## How do I update?
 
 ```bash
-npm update -g claude-sessions
+npm update -g @vineethnkrishnan/claude-sessions
 ```
 
 ## How do I uninstall?
 
 ```bash
-npm uninstall -g claude-sessions
+npm uninstall -g @vineethnkrishnan/claude-sessions
 ```
 
 ## The splash screen is too slow

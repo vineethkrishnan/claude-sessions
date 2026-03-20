@@ -1,5 +1,9 @@
 # claude-sessions
 
+[![npm](https://img.shields.io/npm/v/@vineethnkrishnan/claude-sessions)](https://www.npmjs.com/package/@vineethnkrishnan/claude-sessions)
+[![CI](https://github.com/vineethkrishnan/claude-sessions/actions/workflows/ci.yml/badge.svg)](https://github.com/vineethkrishnan/claude-sessions/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Interactive session manager for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Browse, search, delete, and resume past conversations from your terminal.
 
 Claude Code provides `--resume <session-id>` and `--continue`, but no way to browse or search through your session history. This tool fills that gap.
@@ -35,6 +39,12 @@ Claude Code provides `--resume <session-id>` and `--continue`, but no way to bro
 
 ```bash
 npm install -g @vineethnkrishnan/claude-sessions
+```
+
+Or run without installing:
+
+```bash
+npx @vineethnkrishnan/claude-sessions
 ```
 
 ## Usage
