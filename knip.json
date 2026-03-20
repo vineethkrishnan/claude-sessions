@@ -1,7 +1,5 @@
 {
   "$schema": "https://unpkg.com/knip@latest/schema.json",
-  "entry": ["src/cli.tsx"],
   "project": ["src/**/*.{ts,tsx}"],
-  "ignore": ["src/**/*.spec.ts"],
-  "ignoreDependencies": ["@types/react"]
+  "ignoreDependencies": ["@vitest/coverage-v8"]
 }

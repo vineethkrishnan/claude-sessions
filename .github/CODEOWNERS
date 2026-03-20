@@ -3,3 +3,6 @@
 
 # CI/CD and GitHub config
 .github/ @vineethkrishnan
+
+# Security-sensitive files
+src/domain/session/infrastructure/ @vineethkrishnan

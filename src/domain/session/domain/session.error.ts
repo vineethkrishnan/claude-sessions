@@ -4,11 +4,3 @@ export class SessionNotFoundError extends Error {
     this.name = "SessionNotFoundError";
   }
 }
-
-export class SessionParseError extends Error {
-  constructor(filePath: string, cause?: unknown) {
-    super(`Failed to parse session: ${filePath}`);
-    this.name = "SessionParseError";
-    this.cause = cause;
-  }
-}

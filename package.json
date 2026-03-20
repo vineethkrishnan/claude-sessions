@@ -25,13 +25,14 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "prepare": "husky"
+    "prepare": "husky",
+    "commitlint": "commitlint --edit"
   },
   "files": [
     "dist"
   ],
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "keywords": [
     "claude",
@@ -44,17 +45,25 @@
   ],
   "author": "Vineeth N K",
   "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/vineethkrishnan/claude-sessions.git"
   },
+  "homepage": "https://github.com/vineethkrishnan/claude-sessions#readme",
+  "bugs": {
+    "url": "https://github.com/vineethkrishnan/claude-sessions/issues"
+  },
   "dependencies": {
     "commander": "^13.1.0",
     "ink": "^5.2.0",
-    "ink-text-input": "^6.0.0",
     "react": "^18.3.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@eslint/js": "^10.0.1",
     "@types/node": "^22.15.2",
     "@types/react": "^18.3.20",
