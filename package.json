@@ -1,5 +1,5 @@
 {
-  "name": "claude-sessions",
+  "name": "@vineethnkrishnan/claude-sessions",
   "version": "0.1.1",
   "description": "Interactive session manager for Claude Code — browse, search, delete, and resume past conversations",
   "type": "module",

@@ -34,7 +34,7 @@ Claude Code provides `--resume <session-id>` and `--continue`, but no way to bro
 ## Installation
 
 ```bash
-npm install -g claude-sessions
+npm install -g @vineethnkrishnan/claude-sessions
 ```
 
 ## Usage
@@ -119,10 +119,11 @@ node dist/cli.js
 
 ### CI/CD
 
-- **test.yml** — Runs tests on Node 18/20/22 on every push and PR
-- **pr-title-check.yml** — Validates Conventional Commits format on PR titles
-- **duplication-check.yml** — Detects code duplication via jscpd
-- **release-please.yml** — Automated semantic versioning and npm publish
+- **ci.yml** — Lint, test (Node 20/22), build on every push and PR
+- **quality.yml** — Dead code detection, duplication check, strict type safety
+- **security.yml** — CodeQL, dependency review, Trivy filesystem scan
+- **commitlint.yml** — Validates Conventional Commits format on PR titles
+- **release.yml** — Automated semantic versioning, npm publish, docs deploy
 
 ### Commit Convention
 
@@ -136,7 +137,7 @@ chore: update dependencies
 
 ## Requirements
 
-- Node.js 18+
+- Node.js 20+
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed
 - [fzf](https://github.com/junegunn/fzf) (optional)
 
