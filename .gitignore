@@ -3,6 +3,7 @@ dist/
 coverage/
 docs/.vitepress/dist/
 docs/.vitepress/cache/
+.cursor/
 .DS_Store
 *.swp
 *.swo
