@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/vineethkrishnan/claude-sessions/compare/v0.1.5...v0.1.6) (2026-03-22)
+
+
+### Bug Fixes
+
+* replace real session data in GIFs with fake fixtures ([#13](https://github.com/vineethkrishnan/claude-sessions/issues/13)) ([651648d](https://github.com/vineethkrishnan/claude-sessions/commit/651648dd25fa154c4e8b68bb52bbf1702ab3c318))
+
 ## [0.1.5](https://github.com/vineethkrishnan/claude-sessions/compare/v0.1.4...v0.1.5) (2026-03-22)
 
 
