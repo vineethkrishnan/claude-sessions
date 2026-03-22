@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/vineethkrishnan/claude-sessions/compare/v0.1.6...v0.1.7) (2026-03-22)
+
+
+### Bug Fixes
+
+* **docs:** use claude-sessions command instead of node dist/cli.js in GIFs ([#15](https://github.com/vineethkrishnan/claude-sessions/issues/15)) ([6a2e0a7](https://github.com/vineethkrishnan/claude-sessions/commit/6a2e0a721f166840d444a66a2d44b4fdd1e0eae5))
+
 ## [0.1.6](https://github.com/vineethkrishnan/claude-sessions/compare/v0.1.5...v0.1.6) (2026-03-22)
 
 
