@@ -10,22 +10,7 @@ Interactive session manager for [Claude Code](https://docs.anthropic.com/en/docs
 
 Claude Code provides `--resume <session-id>` and `--continue`, but no way to browse or search through your session history. This tool fills that gap.
 
-```
-   _____ _                 _
-  /  __ \ |               | |
-  | /  \/ | __ _ _   _  __| | ___
-  | |   | |/ _` | | | |/ _` |/ _ \
-  | \__/\ | (_| | |_| | (_| |  __/
-   \____/_|\__,_|\__,_|\__,_|\___|
-
-
- _____               _
-/  ___|             (_)
-\ `--.  ___  ___ ___ _  ___  _ __  ___
- `--. \/ _ \/ __/ __| |/ _ \| '_ \/ __|
-/\__/ /  __/\__ \__ \ | (_) | | | \__ \
-\____/ \___||___/___/_|\___/|_| |_|___/
-```
+![demo](docs/assets/demo.gif)
 
 ## Features
 

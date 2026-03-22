@@ -15,6 +15,8 @@
 
 ## Preview Mode
 
+![preview](./assets/preview.gif)
+
 When you press `p` on a session, a detail pane opens showing:
 
 - **Session metadata** — ID, project, branch, date, message count, working directory
@@ -32,6 +34,8 @@ Preview keybindings:
 
 ## Search Mode
 
+![search](./assets/search.gif)
+
 When you press `/`, the search bar activates:
 
 - Type to filter sessions by project name, git branch, or message preview
@@ -40,6 +44,8 @@ When you press `/`, the search bar activates:
 - Press `Esc` to clear the filter
 
 ## Delete Confirmation
+
+![delete](./assets/delete.gif)
 
 When you press `d` on a session:
 

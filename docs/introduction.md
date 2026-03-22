@@ -4,6 +4,8 @@
 
 Claude Code provides `--resume <session-id>` and `--continue`, but no way to browse or search through your session history. This tool fills that gap.
 
+![demo](./assets/demo.gif)
+
 ## Why?
 
 - You have dozens (or hundreds) of Claude Code sessions
