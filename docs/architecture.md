@@ -1,93 +1,100 @@
 # Architecture
 
-claude-sessions follows a **vertical-slice hexagonal architecture** with clean separation of concerns.
+**claude-sessions** follows a **vertical-slice hexagonal architecture** with a **provider-based system** for multi-agent support.
 
 ## Layer Diagram
 
 ```
-┌──────────────────────────────────────────────────┐
-│  Presenters (Ink/React)                          │
-│  ├── App, SessionTable, SessionPreview, Splash   │
-│  ├── Hooks (useSessions)                         │
-│  └── Formatters                                  │
-├──────────────────────────────────────────────────┤
-│  Application (Use Cases)                         │
-│  ├── ListSessionsUseCase                         │
-│  ├── GetSessionDetailUseCase                     │
-│  ├── DeleteSessionUseCase                        │
-│  └── ResumeSessionUseCase                        │
-├──────────────────────────────────────────────────┤
-│  Domain (Pure Business Logic)                    │
-│  ├── Session entity                              │
-│  ├── SessionDetail + SessionMessage              │
-│  ├── Session errors                              │
-│  └── matchesFilter logic                         │
-├──────────────────────────────────────────────────┤
-│  Infrastructure (Adapters)                       │
-│  ├── FsSessionRepositoryAdapter                  │
-│  ├── FsSessionStorageAdapter                     │
-│  ├── CliProcessLauncherAdapter                   │
-│  └── JSONL parser                                │
-└──────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│  Presenters (Ink/React)                                  │
+│  ├── App, AgentSelector, SessionTable, SessionPreview    │
+│  ├── Hooks (useSessions)                                 │
+│  └── Formatters                                          │
+├──────────────────────────────────────────────────────────┤
+│  Application (Use Cases)                                 │
+│  ├── ListSessionsUseCase                                 │
+│  ├── GetSessionDetailUseCase                             │
+│  ├── DeleteSessionUseCase                                │
+│  └── ResumeSessionUseCase                                │
+├──────────────────────────────────────────────────────────┤
+│  Infrastructure (Providers & Adapters)                   │
+│  ├── MultiAgentSessionRepository (Registry)              │
+│  ├── ClaudeSessionProvider                               │
+│  ├── GeminiSessionProvider                               │
+│  ├── OpenAICodexProvider                                 │
+│  ├── CursorSessionProvider                               │
+│  ├── FsSessionStorageAdapter                             │
+│  └── JSONL / SQLite parser                               │
+├──────────────────────────────────────────────────────────┤
+│  Domain (Pure Business Logic)                            │
+│  ├── Session entity                                      │
+│  ├── SessionDetail + SessionMessage                      │
+│  └── matchesFilter logic                                 │
+└──────────────────────────────────────────────────────────┘
 ```
 
-## Dependency Flow
+## Multi-Agent Provider System
 
-```
-presenters → application → domain ← infrastructure
-```
+The core of the multi-agent support is the `SessionProvider` interface:
 
-- **Domain** has zero external dependencies
-- **Application** depends only on domain types and port interfaces
-- **Infrastructure** implements port interfaces defined by the application layer
-- **Presenters** consume use cases via the module wiring
+![SessionProvider Interface](./assets/code/session-provider.png)
+
+The `MultiAgentSessionRepository` acts as a registry for these providers.
+
+![Multi-Agent Repository](./assets/code/multi-agent-repo.png)
+
+When an agent is selected in the UI, the repository sets the corresponding provider as "active," and all subsequent use case calls are delegated to that provider.
+
+### Example: Cursor Session Provider
+
+Cursor is the most complex provider as it reads from an SQLite database and maps workspace hashes to project paths.
+
+![Cursor Provider](./assets/code/cursor-provider.png)
 
 ## Directory Structure
 
 ```
 src/
 ├── domain/session/              # Session domain module
-│   ├── domain/                  # Pure business logic (zero deps)
-│   │   ├── session.model.ts     # Session entity + filtering
-│   │   ├── session-detail.model.ts  # Conversation detail model
-│   │   └── session.error.ts     # Domain errors
+│   ├── domain/                  # Pure business logic
 │   ├── application/             # Use cases + ports
-│   │   ├── ports/               # Interface contracts
-│   │   ├── list-sessions.use-case.ts
-│   │   ├── delete-session.use-case.ts
-│   │   ├── resume-session.use-case.ts
-│   │   └── get-session-detail.use-case.ts
-│   ├── infrastructure/          # Adapters (fs, spawn)
-│   │   ├── fs-session-repository.adapter.ts
+│   │   ├── ports/               # SessionProvider contract
+│   │   └── ...use-case.ts
+│   ├── infrastructure/          # Adapters & Providers
+│   │   ├── claude-session.provider.ts
+│   │   ├── gemini-session.provider.ts
+│   │   ├── openai-codex.provider.ts
+│   │   ├── cursor-session.provider.ts
+│   │   ├── multi-agent-session-repository.adapter.ts
 │   │   ├── fs-session-storage.adapter.ts
-│   │   ├── cli-process-launcher.adapter.ts
-│   │   └── jsonl-parser.ts
+│   │   └── ...parser.ts
 │   ├── presenters/              # UI layer (Ink/React)
-│   │   ├── components/
-│   │   ├── hooks/
-│   │   ├── formatters/
-│   │   └── app.tsx
+│   │   ├── components/          # AgentSelector, Table, etc.
+│   │   └── ...
 │   └── session.module.ts        # Module wiring (DI)
-├── common/helpers/              # Cross-domain utilities
-│   └── path.helper.ts
+├── common/helpers/              # Utilities
 └── cli.tsx                      # Entry point
 ```
 
 ## Module Wiring
 
-`session.module.ts` acts as a dependency injection container, wiring adapters to use cases:
+`session.module.ts` initializes the repository and registers all providers:
 
 ```ts
 export function createSessionModule(): SessionModule {
-  const repository = new FsSessionRepositoryAdapter();
-  const storage = new FsSessionStorageAdapter();
-  const launcher = new CliProcessLauncherAdapter();
+  const multiAgentRepository = new MultiAgentSessionRepository();
+  const processLauncher = new CliProcessLauncherAdapter();
+
+  // Register all supported agent providers
+  multiAgentRepository.registerProvider(new ClaudeSessionProvider(processLauncher));
+  multiAgentRepository.registerProvider(new GeminiSessionProvider(processLauncher));
+  multiAgentRepository.registerProvider(new OpenAICodexProvider(processLauncher));
+  multiAgentRepository.registerProvider(new CursorSessionProvider(processLauncher));
 
   return {
-    listSessionsUseCase: new ListSessionsUseCase(repository),
-    deleteSessionUseCase: new DeleteSessionUseCase(storage),
-    resumeSessionUseCase: new ResumeSessionUseCase(launcher),
-    getSessionDetailUseCase: new GetSessionDetailUseCase(repository),
+    multiAgentRepository,
+    listSessionsUseCase: new ListSessionsUseCase(multiAgentRepository),
+    // ...
   };
 }
 ```
