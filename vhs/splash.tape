@@ -1,4 +1,4 @@
-# Splash screen animation
+# Splash screen animation → agent selector → sessions
 # Run: vhs vhs/splash.tape
 
 Output docs/assets/splash.gif
@@ -20,6 +20,11 @@ Show
 Type "agent-sessions"
 Enter
 Sleep 5s
+
+# Select Claude from agent selector
+Down
+Enter
+Sleep 3s
 
 Type "q"
 Sleep 500ms

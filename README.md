@@ -6,19 +6,21 @@
 
 **[Documentation](https://agent-sessions.vineethnk.in/)** · **[npm](https://www.npmjs.com/package/@vineethnkrishnan/agent-sessions)** · **[GitHub](https://github.com/vineethkrishnan/agent-sessions)**
 
-Interactive session manager for [Claude Code](https://docs.anthropic.com/en/docs/claude-code). Browse, search, delete, and resume past conversations from your terminal.
+Interactive session manager for CLI agents — [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Gemini CLI](https://github.com/google-gemini/gemini-cli), [OpenAI Codex](https://github.com/openai/codex), and [Cursor Agent](https://www.cursor.com/). Browse, search, delete, and resume past conversations from your terminal.
 
-Claude Code provides `--resume <session-id>` and `--continue`, but no way to browse or search through your session history. This tool fills that gap.
+These CLI agents provide `--resume <session-id>` but no way to browse or search through session history. This tool fills that gap with a unified TUI for all your AI sessions.
 
 ![demo](docs/assets/demo.gif)
 
 ## Features
 
-- Browse all Claude Code sessions sorted by most recent
-- Shows date, project, git branch, message count, and first message preview
+- **Multi-agent support** — Claude, Gemini, Codex, and Cursor in one tool
+- Browse all sessions sorted by most recent across agents
+- Shows date, agent, project, git branch, message count, and first message preview
 - **Session preview** — press `p` to peek into a conversation before resuming
 - Fuzzy search/filter to find sessions quickly
 - Delete old sessions you no longer need
+- Agent selector — switch between agents or view all at once
 - Optional fzf integration for power users
 - Animated splash screen on startup
 - Works on macOS and Linux
@@ -38,10 +40,12 @@ npx @vineethnkrishnan/agent-sessions
 ## Usage
 
 ```bash
-agent-sessions              # Interactive TUI
-agent-sessions --fzf        # Use fzf for selection
-agent-sessions --delete     # Delete mode
-agent-sessions --no-splash  # Skip splash screen
+agent-sessions                    # Interactive TUI (agent selector)
+agent-sessions --agent claude     # Jump to Claude sessions
+agent-sessions --agent gemini     # Jump to Gemini sessions
+agent-sessions --fzf              # Use fzf for selection
+agent-sessions --delete           # Delete mode
+agent-sessions --no-splash        # Skip splash screen
 ```
 
 ## Keybindings
@@ -55,6 +59,7 @@ agent-sessions --no-splash  # Skip splash screen
 | `p`         | Preview session conversation   |
 | `d`         | Delete selected session        |
 | `Esc`       | Clear search / close preview   |
+| `a`         | Switch agent                   |
 | `q`         | Quit                           |
 
 ## Architecture
@@ -139,7 +144,11 @@ chore: update dependencies
 ## Requirements
 
 - Node.js 20+
-- [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed
+- At least one supported CLI agent installed:
+  - [Claude Code](https://docs.anthropic.com/en/docs/claude-code)
+  - [Gemini CLI](https://github.com/google-gemini/gemini-cli)
+  - [OpenAI Codex](https://github.com/openai/codex)
+  - [Cursor Agent](https://www.cursor.com/)
 - [fzf](https://github.com/junegunn/fzf) (optional)
 
 ## Documentation

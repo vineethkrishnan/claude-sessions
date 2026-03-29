@@ -67,7 +67,7 @@ export class GeminiSessionProvider implements SessionProviderPort {
       const chatPayload = JSON.parse(fs.readFileSync(filePath, "utf-8"));
       const messages = (chatPayload.messages || []).map(
         (message: { role: string; content?: unknown }) => ({
-          role: message.role === "user" ? "user" : "assistant",
+          role: message.role?.toLowerCase() === "user" ? ("user" as const) : ("assistant" as const),
           content: stringifyContent(message.content),
         }),
       );

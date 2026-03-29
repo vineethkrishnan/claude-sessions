@@ -16,4 +16,15 @@ export class ResumeSessionUseCase {
     const { command, args } = provider.buildResumeArgs(sessionId);
     this.launcher.launch(command, args);
   }
+
+  buildResumeArgs(
+    sessionId: string,
+    providerName: string,
+  ): { command: string; args: string[] } | null {
+    const provider = this.providers.find(
+      (candidate) => candidate.name.toLowerCase() === providerName.toLowerCase(),
+    );
+    if (!provider) return null;
+    return provider.buildResumeArgs(sessionId);
+  }
 }
