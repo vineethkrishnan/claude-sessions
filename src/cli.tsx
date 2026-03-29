@@ -17,7 +17,7 @@ const require = createRequire(import.meta.url);
 const pkg = require("../package.json");
 
 const program = new Command()
-  .name("claude-sessions")
+  .name("agent-sessions")
   .description(
     "Interactive session manager for CLI Agents (Claude, Gemini, etc.) — browse, search, delete, and resume past conversations",
   )

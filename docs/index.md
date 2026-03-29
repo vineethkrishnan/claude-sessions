@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: claude-sessions
+  name: agent-sessions
   text: Universal CLI Agent Session Manager
   tagline: Browse, search, delete, and resume sessions for Claude, Gemini, OpenAI Codex, and Cursor from an interactive TUI.
   actions:
@@ -11,7 +11,7 @@ hero:
       link: /introduction
     - theme: alt
       text: View on GitHub
-      link: https://github.com/vineethkrishnan/claude-sessions
+      link: https://github.com/vineethkrishnan/agent-sessions
 
 features:
   - title: Multi-Agent Support

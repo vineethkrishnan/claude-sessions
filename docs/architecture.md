@@ -1,6 +1,6 @@
 # Architecture
 
-**claude-sessions** follows a **vertical-slice hexagonal architecture** with a **provider-based system** for multi-agent support.
+**agent-sessions** follows a **vertical-slice hexagonal architecture** with a **provider-based system** for multi-agent support.
 
 ## Layer Diagram
 

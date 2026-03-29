@@ -1,6 +1,6 @@
 # Introduction
 
-**claude-sessions** is an interactive terminal UI (TUI) tool for browsing, searching, and resuming sessions from various AI CLI agents.
+**agent-sessions** is an interactive terminal UI (TUI) tool for browsing, searching, and resuming sessions from various AI CLI agents.
 
 While tools like [Claude Code](https://docs.anthropic.com/en/docs/claude-code), [Gemini CLI](https://geminicli.com/), [OpenAI Codex](https://openai.com/), and [Cursor](https://cursor.com/) provide ways to resume sessions, browsing and searching through your history can be challenging. This tool provides a unified interface for all of them.
 

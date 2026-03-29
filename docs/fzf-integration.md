@@ -2,16 +2,16 @@
 
 ## Overview
 
-For users who prefer [fzf](https://github.com/junegunn/fzf), **claude-sessions** can pipe session data directly to fzf for selection. This works for all supported agents.
+For users who prefer [fzf](https://github.com/junegunn/fzf), **agent-sessions** can pipe session data directly to fzf for selection. This works for all supported agents.
 
 ## Usage
 
 ```bash
 # Use current agent (prompts for agent if not specified)
-claude-sessions --fzf
+agent-sessions --fzf
 
 # Use a specific agent with fzf
-claude-sessions --agent gemini --fzf
+agent-sessions --agent gemini --fzf
 ```
 
 ## What It Shows

@@ -3,7 +3,7 @@
 ## Synopsis
 
 ```
-claude-sessions [options]
+agent-sessions [options]
 ```
 
 ## Options
@@ -21,19 +21,19 @@ claude-sessions [options]
 
 ```bash
 # Launch interactive TUI (shows Agent Selector)
-claude-sessions
+agent-sessions
 
 # Launch directly for Gemini
-claude-sessions --agent gemini
+agent-sessions --agent gemini
 
 # Use fzf picker for Cursor
-claude-sessions --agent cursor --fzf
+agent-sessions --agent cursor --fzf
 
 # Enable deletion with no splash for Claude
-claude-sessions --agent claude --delete --no-splash
+agent-sessions --agent claude --delete --no-splash
 
 # Check version
-claude-sessions --version
+agent-sessions --version
 ```
 
 ## Exit Codes

@@ -3,7 +3,7 @@
 ## Quick Start
 
 ```bash
-claude-sessions
+agent-sessions
 ```
 
 This launches the **Agent Selector** by default, allowing you to choose between Claude, Gemini, OpenAI Codex, and Cursor.
@@ -13,7 +13,7 @@ This launches the **Agent Selector** by default, allowing you to choose between 
 ### Agent Selector (default)
 
 ```bash
-claude-sessions
+agent-sessions
 ```
 
 If launched without a specific agent, you'll be prompted to select one. Use ↑/↓ and `Enter` to confirm. 
@@ -23,7 +23,7 @@ If launched without a specific agent, you'll be prompted to select one. Use ↑/
 ### Specific Agent
 
 ```bash
-claude-sessions --agent <name>
+agent-sessions --agent <name>
 ```
 
 Skip the selector and go straight to sessions for a specific agent (e.g., `claude`, `gemini`, `codex`, `cursor`).
@@ -31,7 +31,7 @@ Skip the selector and go straight to sessions for a specific agent (e.g., `claud
 ### Interactive TUI
 
 ```bash
-claude-sessions
+agent-sessions
 ```
 
 ![splash](./assets/splash.gif)
@@ -41,7 +41,7 @@ Browse sessions in a full-screen table. Use arrow keys to navigate, `/` to searc
 ### fzf Mode
 
 ```bash
-claude-sessions --fzf
+agent-sessions --fzf
 ```
 
 Pipes session data for the selected agent to fzf for selection. Useful if you prefer fzf's fuzzy matching.
@@ -49,7 +49,7 @@ Pipes session data for the selected agent to fzf for selection. Useful if you pr
 ### Delete Mode
 
 ```bash
-claude-sessions --delete
+agent-sessions --delete
 ```
 
 Enables the delete key (`d`) to remove sessions. A confirmation dialog prevents accidental deletions.
@@ -57,7 +57,7 @@ Enables the delete key (`d`) to remove sessions. A confirmation dialog prevents 
 ### Skip Splash Screen
 
 ```bash
-claude-sessions --no-splash
+agent-sessions --no-splash
 ```
 
 Skips the animated splash screen and goes straight to the agent selector or session table.
@@ -65,7 +65,7 @@ Skips the animated splash screen and goes straight to the agent selector or sess
 ## Combining Flags
 
 ```bash
-claude-sessions --agent gemini --delete --no-splash
+agent-sessions --agent gemini --delete --no-splash
 ```
 
 All flags can be combined freely.
