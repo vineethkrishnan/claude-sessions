@@ -4,13 +4,13 @@ import React from "react";
 import { Command } from "commander";
 import { render } from "ink";
 import { createSessionModule } from "./domain/session/session.module.js";
-import { App, type CliOptions } from "./domain/session/presenters/app.js";
+import { App, type CliOptions, type ResumeRequest } from "./domain/session/presenters/app.js";
 import {
   formatDate,
   truncate,
   padRight,
 } from "./domain/session/presenters/formatters/table-formatter.js";
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
@@ -42,7 +42,35 @@ const sessionModule = createSessionModule();
 if (options.fzf) {
   runFzfMode();
 } else {
-  render(<App module={sessionModule} options={options} version={pkg.version} />);
+  runTuiMode();
+}
+
+function runTuiMode(): void {
+  let pendingResume: ResumeRequest | null = null;
+
+  const handleResume = (request: ResumeRequest) => {
+    pendingResume = request;
+  };
+
+  const instance = render(
+    <App module={sessionModule} options={options} version={pkg.version} onResume={handleResume} />,
+  );
+
+  instance.waitUntilExit().then(() => {
+    if (pendingResume) {
+      const { sessionId, providerName } = pendingResume;
+      const resumeArgs = sessionModule.resumeSessionUseCase.buildResumeArgs(
+        sessionId,
+        providerName,
+      );
+      if (resumeArgs) {
+        const result = spawnSync(resumeArgs.command, resumeArgs.args, {
+          stdio: "inherit",
+        });
+        process.exit(result.status ?? 0);
+      }
+    }
+  });
 }
 
 async function runFzfMode(): Promise<void> {
@@ -97,8 +125,16 @@ async function runFzfMode(): Promise<void> {
       const sessionId = selection.slice(0, separatorIndex);
       const providerName = selection.slice(separatorIndex + 2);
       if (sessionId && providerName) {
-        console.log(`Resuming ${providerName} session: ${sessionId}`);
-        sessionModule.resumeSessionUseCase.execute(sessionId, providerName);
+        const resumeArgs = sessionModule.resumeSessionUseCase.buildResumeArgs(
+          sessionId,
+          providerName,
+        );
+        if (resumeArgs) {
+          const result = spawnSync(resumeArgs.command, resumeArgs.args, {
+            stdio: "inherit",
+          });
+          process.exit(result.status ?? 0);
+        }
       }
     }
   });

@@ -3,14 +3,12 @@ import type { Session } from "../../domain/session.model.js";
 import type { SessionDetail } from "../../domain/session-detail.model.js";
 import type { ListSessionsUseCase } from "../../application/use-cases/list-sessions.use-case.js";
 import type { DeleteSessionUseCase } from "../../application/use-cases/delete-session.use-case.js";
-import type { ResumeSessionUseCase } from "../../application/use-cases/resume-session.use-case.js";
 import type { GetSessionDetailUseCase } from "../../application/use-cases/get-session-detail.use-case.js";
 import type { ProviderManagementPort } from "../../application/ports/provider-management.port.js";
 
 interface UseSessionsOptions {
   listUseCase: ListSessionsUseCase;
   deleteUseCase: DeleteSessionUseCase;
-  resumeUseCase: ResumeSessionUseCase;
   getDetailUseCase: GetSessionDetailUseCase;
   repository: ProviderManagementPort;
 }
@@ -18,7 +16,6 @@ interface UseSessionsOptions {
 export function useSessions({
   listUseCase,
   deleteUseCase,
-  resumeUseCase,
   getDetailUseCase,
   repository,
 }: UseSessionsOptions) {
@@ -30,6 +27,8 @@ export function useSessions({
   const [activeProvider, setActiveProvider] = useState<{ id: string; name: string } | null>(
     repository.getActiveProvider(),
   );
+  // Track whether the user has explicitly selected a provider (or --agent was passed)
+  const [providerSelected, setProviderSelected] = useState(repository.getActiveProvider() !== null);
 
   const refreshSessions = useCallback(async () => {
     setIsLoaded(false);
@@ -45,8 +44,10 @@ export function useSessions({
   }, [listUseCase]);
 
   useEffect(() => {
-    refreshSessions();
-  }, [refreshSessions, activeProvider]);
+    if (providerSelected) {
+      refreshSessions();
+    }
+  }, [refreshSessions, activeProvider, providerSelected]);
 
   const filtered = useMemo(
     () => (filter ? allSessions.filter((session) => session.matchesFilter(filter)) : allSessions),
@@ -63,13 +64,6 @@ export function useSessions({
       }
     },
     [deleteUseCase],
-  );
-
-  const resumeSession = useCallback(
-    (session: Session) => {
-      resumeUseCase.execute(session.id, session.provider);
-    },
-    [resumeUseCase],
   );
 
   const openPreview = useCallback(
@@ -94,6 +88,7 @@ export function useSessions({
     (providerId: string | null) => {
       repository.setActiveProvider(providerId);
       setActiveProvider(repository.getActiveProvider());
+      setProviderSelected(true);
       setFilter("");
       setPreviewSession(null);
       setPreviewDetail(null);
@@ -109,7 +104,6 @@ export function useSessions({
     filter,
     setFilter,
     deleteSession,
-    resumeSession,
     openPreview,
     closePreview,
     previewSession,

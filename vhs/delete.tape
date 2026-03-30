@@ -17,7 +17,7 @@ Enter
 Sleep 500ms
 Show
 
-Type "agent-sessions --no-splash"
+Type "agent-sessions --agent claude --no-splash"
 Enter
 Sleep 3s
 

@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Box, useInput } from "ink";
+import React, { useState, useEffect, useCallback } from "react";
+import { Box, useInput, useApp } from "ink";
 import type { SessionModule } from "../session.module.js";
+import type { Session } from "../domain/session.model.js";
 import { SplashScreen } from "./components/splash-screen.js";
 import { SessionTable } from "./components/session-table.js";
 import { SessionPreview } from "./components/session-preview.js";
@@ -14,22 +15,38 @@ export interface CliOptions {
   agent?: string;
 }
 
+export interface ResumeRequest {
+  sessionId: string;
+  providerName: string;
+}
+
 interface AppProps {
   module: SessionModule;
   options: CliOptions;
   version: string;
+  onResume?: (request: ResumeRequest) => void;
 }
 
-export function App({ module, options, version }: AppProps) {
+export function App({ module, options, version, onResume }: AppProps) {
+  const { exit } = useApp();
   const [isAgentSelectorVisible, setAgentSelectorVisible] = useState(!options.agent);
   const [isSplashVisible, setSplashVisible] = useState(!options.noSplash && !options.agent);
+
+  const handleResume = useCallback(
+    (session: Session) => {
+      if (onResume) {
+        onResume({ sessionId: session.id, providerName: session.provider });
+        exit();
+      }
+    },
+    [onResume, exit],
+  );
 
   const {
     filtered,
     filter,
     setFilter,
     deleteSession,
-    resumeSession,
     openPreview,
     closePreview,
     previewSession,
@@ -42,7 +59,6 @@ export function App({ module, options, version }: AppProps) {
   } = useSessions({
     listUseCase: module.listSessionsUseCase,
     deleteUseCase: module.deleteSessionUseCase,
-    resumeUseCase: module.resumeSessionUseCase,
     getDetailUseCase: module.getSessionDetailUseCase,
     repository: module.multiAgentRepository,
   });
@@ -103,7 +119,7 @@ export function App({ module, options, version }: AppProps) {
           session={previewSession}
           detail={previewDetail}
           onClose={closePreview}
-          onResume={() => resumeSession(previewSession)}
+          onResume={() => handleResume(previewSession)}
         />
       </Box>
     );
@@ -118,7 +134,7 @@ export function App({ module, options, version }: AppProps) {
         isDeleteMode={options.delete}
         onSetFilter={setFilter}
         onDelete={deleteSession}
-        onResume={resumeSession}
+        onResume={handleResume}
         onPreview={openPreview}
       />
     </Box>

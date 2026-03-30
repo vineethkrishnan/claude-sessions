@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Generates fake Claude session data for VHS recordings.
+# Generates fake session data for VHS recordings.
 # Usage: ./vhs/generate-fixtures.sh
 
 set -euo pipefail
