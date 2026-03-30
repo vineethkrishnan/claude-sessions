@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.10](https://github.com/vineethkrishnan/agent-sessions/compare/v0.1.9...v0.1.10) (2026-03-30)
+
+
+### Features
+
+* **test:** add E2E test suite and fix production issues ([#24](https://github.com/vineethkrishnan/agent-sessions/issues/24)) ([90a0d9d](https://github.com/vineethkrishnan/agent-sessions/commit/90a0d9d264bd8cd9b71195c35286730277f9d812))
+
 ## [0.1.9](https://github.com/vineethkrishnan/agent-sessions/compare/v0.1.8...v0.1.9) (2026-03-29)
 
 
