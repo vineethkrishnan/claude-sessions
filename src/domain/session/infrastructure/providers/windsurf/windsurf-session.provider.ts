@@ -90,7 +90,9 @@ export class WindsurfSessionProvider implements SessionProviderPort {
   private parseConversation(filePath: string): WindsurfConversation | null {
     try {
       const content = fs.readFileSync(filePath, "utf-8");
-      return JSON.parse(content) as WindsurfConversation;
+      const parsed: unknown = JSON.parse(content);
+      if (!parsed || typeof parsed !== "object") return null;
+      return parsed as WindsurfConversation;
     } catch {
       return null;
     }

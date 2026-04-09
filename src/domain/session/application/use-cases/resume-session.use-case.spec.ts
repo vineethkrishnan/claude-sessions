@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import { ResumeSessionUseCase } from "./resume-session.use-case.js";
 import type { ProcessLauncherPort } from "../ports/process-launcher.port.js";
 import type { SessionProviderPort } from "../ports/session-provider.port.js";
+import { SessionDetail } from "../../domain/session-detail.model.js";
 
 function createMockProvider(name: string): SessionProviderPort {
   return {
@@ -11,7 +12,8 @@ function createMockProvider(name: string): SessionProviderPort {
       args: ["--resume", sessionId],
     }),
     findAll: async () => [],
-    getDetail: async () => null!,
+    getDetail: async () =>
+      new SessionDetail({ messages: [], totalMessages: 0, cwd: "", gitBranch: "" }),
   };
 }
 
