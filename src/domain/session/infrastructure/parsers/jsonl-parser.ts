@@ -1,14 +1,14 @@
 import fs from "node:fs";
 import type { SessionMessage } from "../../domain/session-detail.model.js";
 
-export interface ParsedSessionMetadata {
+interface ParsedSessionMetadata {
   preview: string;
   gitBranch: string;
   cwd: string;
   messageCount: number;
 }
 
-export interface ParsedSessionDetail {
+interface ParsedSessionDetail {
   messages: SessionMessage[];
   totalMessages: number;
   gitBranch: string;
